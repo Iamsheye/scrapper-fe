@@ -6,7 +6,7 @@ export const Index = () => {
       <h3>Welcome Home!</h3>
       <Link to="/login">
         {({ isActive }) => (
-          <button className="p-2 bg-blue-500 text-white rounded-md">
+          <button className="rounded-md bg-blue-500 p-2 text-white">
             Login
           </button>
         )}
