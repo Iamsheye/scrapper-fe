@@ -25,7 +25,8 @@ function Dashboard() {
             toast.dismiss(toastId);
             toast.error("An error occured");
           }
-        }}>
+        }}
+      >
         Get Job Alerts
       </button>
     </div>

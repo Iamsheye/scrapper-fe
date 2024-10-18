@@ -2,50 +2,49 @@ import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
-import { googleLogin, signIn } from "@/network/auth";
+import { googleLogin, signUp } from "@/network/auth";
 import Input from "@/components/input";
 import TogglePasswordBtn from "@/components/toggle-password-btn";
-import GoogleBtn from "@/components/google-btn";
 import FooterText from "@/components/footer-text";
+import GoogleBtn from "@/components/google-btn";
 import AuthIcons from "@/components/auth-icons";
+import { signupSchema } from "@/schemas";
 import { useHookForm } from "@/hooks/useHookForm";
-import { loginSchema } from "@/schemas";
-import { toastError } from "@/utils";
 
-export const LoginPage = () => {
-  const { next } = Route.useSearch<{ next?: string }>();
+export const SignupPage = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useHookForm(loginSchema, {
+  } = useHookForm(signupSchema, {
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const submitForm = handleSubmit(async ({ email, password }) => {
-    const toastId = toast.loading("Logging in...");
+  const submitForm = handleSubmit(async ({ name, email, password }) => {
+    const toastId = toast.loading("Signing up...");
     try {
-      const data = await signIn({
+      await signUp({
+        name,
         email,
         password,
       });
 
       toast.dismiss(toastId);
-      localStorage.setItem("SCRAPPER_TOKEN", data.token);
-      localStorage.setItem("SCRAPPER_REFRESH_TOKEN", data.refreshToken);
-      toast.success("Login Successful");
-
+      toast.success("Signup Successful");
       navigate({
-        to: next || "/dashboard",
+        to: "/login",
       });
     } catch (error) {
       toast.dismiss(toastId);
-      toastError(error);
+      toast.error("Signup Failed");
     }
   });
 
@@ -70,7 +69,6 @@ export const LoginPage = () => {
     },
     onError: (err) => {
       toast.error(err.error_description || "Google Login Failed");
-      console.log(err);
     },
     flow: "auth-code",
   });
@@ -81,7 +79,7 @@ export const LoginPage = () => {
       <div className="wrapper">
         <section className="mx-auto mb-10 max-w-[324px] md:mb-12 md:max-w-max">
           <h1 className="mb-2 text-center text-[2rem] font-bold text-primary md:mb-4 md:text-[3rem]">
-            log in
+            ready to try scrapper out
           </h1>
           <p className="text-center text-[1.25rem] text-form_text">
             your automated help in job search. scrapper brings jobs to you in no
@@ -92,47 +90,57 @@ export const LoginPage = () => {
         <form onSubmit={submitForm} className="flex flex-col gap-10 md:px-3">
           <div className="flex flex-col gap-4 md:gap-6">
             <Input
+              name="name"
+              placeholder="Name"
+              register={register}
+              errors={errors}
+            />
+            <Input
               name="email"
               placeholder="Email"
               register={register}
               errors={errors}
             />
-            <div>
-              <div className="relative mb-2 md:mb-3">
-                <Input
-                  name="password"
-                  placeholder="Password"
-                  register={register}
-                  errors={errors}
-                  type={showPassword ? "text" : "password"}
-                />
-                <TogglePasswordBtn
-                  showPassword={showPassword}
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-              <Link
-                to="/forgot-password"
-                className="text-[0.875rem] text-primary underline"
-              >
-                forgot password?
-              </Link>
+            <div className="relative">
+              <Input
+                name="password"
+                placeholder="Password"
+                register={register}
+                errors={errors}
+                type={showPassword ? "text" : "password"}
+              />
+              <TogglePasswordBtn
+                showPassword={showPassword}
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
+            <div className="relative">
+              <Input
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                register={register}
+                errors={errors}
+                type={showConfirmPassword ? "text" : "password"}
+              />
+              <TogglePasswordBtn
+                showPassword={showConfirmPassword}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              />
             </div>
           </div>
-
           <div className="flex flex-col items-center gap-6 md:gap-8">
             <button
               type="submit"
               className="h-[56px] w-full rounded-[40px] bg-primary text-[1rem] font-semibold text-[#FAFAFAFA] md:h-[88px] md:text-[1.5rem] md:font-bold"
             >
-              continue
+              get started
             </button>
             <GoogleBtn onClick={() => login()} />
             <Link
-              to="/signup"
+              to="/login"
               className="text-[0.875rem] text-primary underline"
             >
-              don’t have an account? sign up
+              already have an account? log in
             </Link>
           </div>
         </form>
@@ -143,6 +151,6 @@ export const LoginPage = () => {
   );
 };
 
-export const Route = createFileRoute("/login")({
-  component: LoginPage,
+export const Route = createFileRoute("/signup")({
+  component: SignupPage,
 });
