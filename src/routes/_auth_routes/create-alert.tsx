@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import Input from "@/components/input";
-import TagInput from "@/assets/tag-input";
+import TagInput from "@/components/tag-input";
 import { useHookForm } from "@/hooks/useHookForm";
 import { createJobAlertSchema } from "@/schemas/job_alert";
 import { createJobAlert } from "@/network/jobs";

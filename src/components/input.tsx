@@ -36,7 +36,7 @@ export const Input = <FormData extends FieldValues>({
       <div className="relative">
         <input
           type={inputType}
-          className="h-[48px] w-full rounded-[24px] bg-form px-6 py-4 text-[0.875rem] font-semibold focus-visible:outline-form_text md:h-[88px] md:rounded-[40px] md:p-8 md:text-[1.25rem]"
+          className="h-[48px] w-full rounded-[24px] bg-form px-6 py-4 text-[0.875rem] font-semibold text-primary focus-visible:outline-form_text md:h-[88px] md:rounded-[40px] md:p-8 md:text-[1.25rem]"
           {...rest}
           {...register(name)}
         />
