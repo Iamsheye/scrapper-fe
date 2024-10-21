@@ -4,7 +4,6 @@ import { useGoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import { googleLogin, signUp } from "@/network/auth";
 import Input from "@/components/input";
-import TogglePasswordBtn from "@/components/toggle-password-btn";
 import FooterText from "@/components/footer-text";
 import GoogleBtn from "@/components/google-btn";
 import AuthIcons from "@/components/auth-icons";
@@ -104,27 +103,25 @@ export const SignupPage = () => {
             <div className="relative">
               <Input
                 name="password"
+                type="password"
                 placeholder="Password"
                 register={register}
                 errors={errors}
-                type={showPassword ? "text" : "password"}
-              />
-              <TogglePasswordBtn
                 showPassword={showPassword}
-                onClick={() => setShowPassword(!showPassword)}
+                onToggleClick={() => setShowPassword(!showPassword)}
               />
             </div>
             <div className="relative">
               <Input
                 name="confirmPassword"
+                type="password"
                 placeholder="Confirm Password"
                 register={register}
                 errors={errors}
-                type={showConfirmPassword ? "text" : "password"}
-              />
-              <TogglePasswordBtn
                 showPassword={showConfirmPassword}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                onToggleClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
               />
             </div>
           </div>

@@ -11,14 +11,13 @@ body {
   font-weight: 400;
 }
 
- /* HIDE PASSWORD TOGGLE */
-input[type="password"]::-ms-reveal, 
+/* HIDE PASSWORD TOGGLE */
+input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear,
-input[type="password"]::-webkit-clear-button, 
+input[type="password"]::-webkit-clear-button,
 input[type="password"]::-webkit-reveal-button {
   display: none;
 }
-
 
 .wrapper {
   max-width: 596px;
@@ -31,4 +30,11 @@ input[type="password"]::-webkit-reveal-button {
   justify-content: center;
   align-items: center;
   height: calc(100dvh - 64px);
+}
+
+.empty-job_alert {
+  height: calc(100dvh - 204px);
+}
+
+@media (min-width: 768px) {
 }

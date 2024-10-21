@@ -44,7 +44,10 @@ const FooterText = () => {
         className="text-center text-[0.875rem] font-medium text-form_text md:text-[1.25rem]"
       >
         designed & developed by{" "}
-        <a href="#" target="_blank">
+        <a
+          href="https://mojola.notion.site/Mojola-Ojoniyi-5012964d6a1c4f958780a9d4e31a3cbe"
+          target="_blank"
+        >
           mo
         </a>{" "}
         &{" "}
