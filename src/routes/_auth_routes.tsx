@@ -1,4 +1,5 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import Wrapper from "@/components/wrapper";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth_routes")({
   beforeLoad: ({ location }) => {
@@ -13,4 +14,9 @@ export const Route = createFileRoute("/_auth_routes")({
       });
     }
   },
+  component: () => (
+    <Wrapper>
+      <Outlet />
+    </Wrapper>
+  ),
 });

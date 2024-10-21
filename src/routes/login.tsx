@@ -4,7 +4,6 @@ import { useGoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import { googleLogin, signIn } from "@/network/auth";
 import Input from "@/components/input";
-import TogglePasswordBtn from "@/components/toggle-password-btn";
 import GoogleBtn from "@/components/google-btn";
 import FooterText from "@/components/footer-text";
 import AuthIcons from "@/components/auth-icons";
@@ -98,17 +97,15 @@ export const LoginPage = () => {
               errors={errors}
             />
             <div>
-              <div className="relative mb-2 md:mb-3">
+              <div className="mb-2 md:mb-3">
                 <Input
                   name="password"
+                  type="password"
                   placeholder="Password"
                   register={register}
                   errors={errors}
-                  type={showPassword ? "text" : "password"}
-                />
-                <TogglePasswordBtn
                   showPassword={showPassword}
-                  onClick={() => setShowPassword(!showPassword)}
+                  onToggleClick={() => setShowPassword(!showPassword)}
                 />
               </div>
               <Link
