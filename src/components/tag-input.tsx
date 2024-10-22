@@ -2,6 +2,7 @@ import { useState } from "react";
 import Trash from "@/assets/trash.svg?react";
 
 type TagInputProps = {
+  name: string;
   placeholder: string;
   tagList: string[];
   onClearAll: () => void;
@@ -10,6 +11,7 @@ type TagInputProps = {
 };
 
 const TagInput = ({
+  name,
   placeholder,
   tagList,
   onClearAll,
@@ -23,8 +25,9 @@ const TagInput = ({
       <div className="relative">
         <input
           type="text"
-          placeholder={placeholder}
+          name={name}
           value={text}
+          placeholder={placeholder}
           className="h-[48px] w-full rounded-[24px] bg-form px-6 py-4 text-[0.875rem] font-semibold text-primary focus-visible:outline-form_text md:h-[88px] md:rounded-[40px] md:p-8 md:text-[1.25rem]"
           onChange={(e) => {
             setText(e.target.value);

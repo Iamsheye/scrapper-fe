@@ -121,6 +121,7 @@ function CreateAlert() {
               </div>
               <div>
                 <TagInput
+                  name="include"
                   placeholder="include words like"
                   tagList={watchIncludeWords || []}
                   onClearAll={() => setValue("includeWords", [])}
@@ -138,6 +139,7 @@ function CreateAlert() {
               </div>
               <div>
                 <TagInput
+                  name="omit"
                   placeholder="omit words like"
                   tagList={watchOmitWords || []}
                   onClearAll={() => setValue("omitWords", [])}
