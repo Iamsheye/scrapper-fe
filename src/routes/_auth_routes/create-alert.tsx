@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import toast from "react-hot-toast";
 import Input from "@/components/input";
 import TagInput from "@/components/tag-input";
 import { useHookForm } from "@/hooks/useHookForm";
 import { createJobAlertSchema } from "@/schemas/job_alert";
 import { createJobAlert } from "@/network/jobs";
+import { toastError } from "@/utils";
 import UserIcon from "@/assets/user.svg?react";
 import CreateSuccessIcon from "@/assets/create-job_alert-success.svg?react";
-import toast from "react-hot-toast";
-import { toastError } from "@/utils";
 
 export const Route = createFileRoute("/_auth_routes/create-alert")({
   component: CreateAlert,
