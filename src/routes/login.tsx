@@ -58,8 +58,12 @@ export const LoginPage = () => {
           toast.dismiss(toastId);
           toast.success("Login Successful");
           localStorage.setItem("SCRAPPER_TOKEN", user.data.token);
+          localStorage.setItem(
+            "SCRAPPER_REFRESH_TOKEN",
+            user.data.refreshToken,
+          );
           navigate({
-            to: "/dashboard",
+            to: next || "/dashboard",
           });
         } catch (error) {
           toast.dismiss(toastId);
