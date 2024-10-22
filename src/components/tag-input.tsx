@@ -20,9 +20,27 @@ const TagInput = ({
 }: TagInputProps) => {
   const [text, setText] = useState("");
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    if (!text) return;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onEnter(text);
+      setText("");
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (text) {
+      onEnter(text);
+      setText("");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
-      <div className="relative">
+      <form onSubmit={handleSubmit} className="relative">
         <input
           type="text"
           name={name}
@@ -32,16 +50,11 @@ const TagInput = ({
           onChange={(e) => {
             setText(e.target.value);
           }}
-          onKeyDown={(e) => {
-            e.stopPropagation();
-            if (!text) return;
-            if (e.key === "Enter") {
-              e.preventDefault();
-              onEnter(text);
-              setText("");
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
+        <button type="submit" style={{ display: "none" }} aria-hidden="true">
+          Submit
+        </button>
         {tagList?.length > 0 && (
           <button
             type="button"
@@ -52,7 +65,7 @@ const TagInput = ({
             <span>clear all</span>
           </button>
         )}
-      </div>
+      </form>
       <div className="flex flex-wrap gap-2 px-2">
         {tagList?.map((word, index) => (
           <div
