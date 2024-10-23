@@ -36,5 +36,9 @@ input[type="password"]::-webkit-reveal-button {
   height: calc(100dvh - 204px);
 }
 
+.empty-job {
+  height: calc(100dvh - 302px);
+}
+
 @media (min-width: 768px) {
 }
