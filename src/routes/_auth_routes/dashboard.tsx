@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import JobAlert from "@/components/job-alert";
 import DialogModal from "@/components/modal";
@@ -20,6 +20,8 @@ export const Route = createFileRoute("/_auth_routes/dashboard")({
 });
 
 function Dashboard() {
+  const router = useRouter();
+
   const { jobAlerts } = Route.useLoaderData();
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
 
@@ -31,6 +33,7 @@ function Dashboard() {
       toast.dismiss(toastId);
       toast.success("deleted job alert");
       setShowDeleteModal(null);
+      router.invalidate();
     } catch (error) {
       toast.dismiss(toastId);
       toastError(error);
