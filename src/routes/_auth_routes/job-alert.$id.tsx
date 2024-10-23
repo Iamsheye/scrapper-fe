@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import toast from "react-hot-toast";
+import { useHookForm } from "@/hooks/useHookForm";
 import Input from "@/components/input";
 import TagInput from "@/components/tag-input";
-import { useHookForm } from "@/hooks/useHookForm";
-import { createJobAlertSchema } from "@/schemas/job_alert";
-import { createJobAlert } from "@/network/jobs";
+import { getJobAlert, editJobAlert } from "@/network/jobs";
+import { editJobAlertSchema } from "@/schemas/job_alert";
 import { toastError } from "@/utils";
 import UserIcon from "@/assets/user.svg?react";
 import CreateSuccessIcon from "@/assets/create-job_alert-success.svg?react";
 
-export const Route = createFileRoute("/_auth_routes/create-alert")({
-  component: CreateAlert,
+export const Route = createFileRoute("/_auth_routes/job-alert/$id")({
+  component: EditJobAlert,
+  loader: async ({ params }) => {
+    const jobAlert = await getJobAlert(params.id);
+
+    return {
+      jobAlert,
+    };
+  },
 });
 
-function CreateAlert() {
+function EditJobAlert() {
+  const { jobAlert } = Route.useLoaderData();
+  const { id } = Route.useParams();
+
   const { history } = useRouter();
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
 
@@ -24,24 +34,23 @@ function CreateAlert() {
     formState: { errors },
     watch,
     setValue,
-  } = useHookForm(createJobAlertSchema, {
-    name: "",
-    search: "",
-    description: "",
-    includeWords: [],
-    omitWords: [],
+  } = useHookForm(editJobAlertSchema, {
+    name: jobAlert.name,
+    description: jobAlert.description,
+    includeWords: jobAlert.includeWords,
+    omitWords: jobAlert.omitWords,
   });
 
   const watchIncludeWords = watch("includeWords");
   const watchOmitWords = watch("omitWords");
 
-  const submitJobAlert = handleSubmit(async (data) => {
-    const toastId = toast.loading("creating job alert");
+  const saveJobAlert = handleSubmit(async (data) => {
+    const toastId = toast.loading("saving job alert");
     try {
-      await createJobAlert(data);
+      await editJobAlert(id, data);
 
       toast.dismiss(toastId);
-      toast.success("created job alert");
+      toast.success("saved job alert");
 
       setTimeout(() => {
         setShowSuccessScreen(true);
@@ -75,7 +84,7 @@ function CreateAlert() {
           <div className="empty-job_alert flex flex-col items-center justify-center gap-8 md:gap-10">
             <CreateSuccessIcon />
             <p className="text-center text-[1.5rem] font-semibold text-form_text md:text-[2rem]">
-              alert created successfully
+              alert edited successfully
             </p>
 
             <Link
@@ -87,11 +96,11 @@ function CreateAlert() {
           </div>
         ) : (
           <form
-            onSubmit={submitJobAlert}
+            onSubmit={saveJobAlert}
             className="flex max-w-[596px] grow flex-col gap-8 md:gap-10"
           >
             <h1 className="text-center text-[2rem] font-bold text-primary md:text-[3rem]">
-              create job alert
+              edit job alert
             </h1>
 
             <div className="flex flex-col gap-4 md:gap-6">
@@ -99,14 +108,6 @@ function CreateAlert() {
                 <Input
                   name="name"
                   placeholder="name"
-                  register={register}
-                  errors={errors}
-                />
-              </div>
-              <div>
-                <Input
-                  name="search"
-                  placeholder="search"
                   register={register}
                   errors={errors}
                 />
@@ -161,7 +162,7 @@ function CreateAlert() {
               type="submit"
               className="h-[56px] w-full rounded-[40px] bg-primary text-[1rem] font-semibold text-[#FAFAFAFA] md:h-[88px] md:text-[1.5rem] md:font-bold"
             >
-              create alert
+              save
             </button>
           </form>
         )}
@@ -169,5 +170,3 @@ function CreateAlert() {
     </div>
   );
 }
-
-export default CreateAlert;

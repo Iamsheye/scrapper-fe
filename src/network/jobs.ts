@@ -1,5 +1,5 @@
-import { type JobAlert } from "@/types";
 import http from "./axiosInstance";
+import { IJobs, type IJobAlert } from "@/types";
 
 type ICreateJobAlert = {
   name: string;
@@ -9,14 +9,48 @@ type ICreateJobAlert = {
   omitWords?: string[];
 };
 
+type IJobsParams = {
+  page: number;
+  perPage: number;
+  search?: string;
+  dateRange?: [string, string];
+};
+
 export const getAllJobAlerts = async () => {
   const res = await http.get("/job-alert");
 
-  return res.data.data as JobAlert[];
+  return res.data.data as IJobAlert[];
+};
+
+export const getJobAlert = async (id: string) => {
+  const res = await http.get(`/job-alert/${id}`);
+
+  return res.data.data as IJobAlert;
 };
 
 export const createJobAlert = async (data: ICreateJobAlert) => {
   const res = await http.post("/job-alert", data);
 
   return res.data.data as any;
+};
+
+export const editJobAlert = async (
+  id: string,
+  data: Partial<ICreateJobAlert>,
+) => {
+  const res = await http.patch(`/job-alert/${id}`, data);
+
+  return res.data.data as any;
+};
+
+export const deleteJobAlert = async (id: string) => {
+  const res = await http.delete(`/job-alert/${id}`);
+
+  return res.data.data as any;
+};
+
+export const getJobAlertJobs = async (id: string, params: IJobsParams) => {
+  const res = await http.get(`/job-alert/${id}/jobs`, { params });
+
+  return res.data.data as IJobs[];
 };

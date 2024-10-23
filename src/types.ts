@@ -1,4 +1,4 @@
-export type JobAlert = {
+export type IJobAlert = {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -8,6 +8,15 @@ export type JobAlert = {
   includeWords: string[];
   omitWords: string[];
   userId: string;
-  // TODO: Add Jobs type
-  jobs: any[];
+  jobs: IJobs[];
+};
+
+export type IJobs = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  link: string;
+  hostSite: string;
+  jobAlertId: string;
 };

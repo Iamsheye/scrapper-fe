@@ -7,3 +7,10 @@ export const createJobAlertSchema = z.object({
   includeWords: z.array(z.string()).optional(),
   omitWords: z.array(z.string()).optional(),
 });
+
+export const editJobAlertSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  description: z.string().optional(),
+  includeWords: z.array(z.string()).optional(),
+  omitWords: z.array(z.string()).optional(),
+});
