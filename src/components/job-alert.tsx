@@ -12,6 +12,7 @@ const JobAlert = ({ alert, onDelete }: IJobAlertProps) => {
       <Link
         to="/jobs/$id"
         params={{ id: alert.id }}
+        search={{ page: 1, search: "" }}
         className="mb-8 flex w-full flex-col gap-2.5 text-left lg:gap-4"
       >
         <>

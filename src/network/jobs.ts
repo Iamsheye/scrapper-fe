@@ -16,6 +16,13 @@ type IJobsParams = {
   dateRange?: [string, string];
 };
 
+type Metadata = {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+};
+
 export const getUserDetails = async () => {
   const res = await http.get("/user/me");
 
@@ -58,5 +65,5 @@ export const deleteJobAlert = async (id: string) => {
 export const getJobAlertJobs = async (id: string, params: IJobsParams) => {
   const res = await http.get(`/job-alert/${id}/jobs`, { params });
 
-  return res.data.data as IJobs[];
+  return res.data.data as { jobs: IJobs[]; metadata: Metadata };
 };
