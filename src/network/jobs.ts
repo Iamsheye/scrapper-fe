@@ -1,5 +1,5 @@
 import http from "./axiosInstance";
-import { IJobs, type IJobAlert } from "@/types";
+import { IJobs, User, type IJobAlert } from "@/types";
 
 type ICreateJobAlert = {
   name: string;
@@ -14,6 +14,12 @@ type IJobsParams = {
   perPage: number;
   search?: string;
   dateRange?: [string, string];
+};
+
+export const getUserDetails = async () => {
+  const res = await http.get("/user/me");
+
+  return res.data.data as User;
 };
 
 export const getAllJobAlerts = async () => {

@@ -1,10 +1,15 @@
-import Wrapper from "@/components/wrapper";
+import { createContext } from "react";
 import {
   createFileRoute,
   Outlet,
   redirect,
   useRouter,
 } from "@tanstack/react-router";
+import Wrapper from "@/components/wrapper";
+import { getUserDetails } from "@/network/jobs";
+import { User } from "@/types";
+
+export const UserContext = createContext<User | null>(null);
 
 export const Route = createFileRoute("/_auth_routes")({
   beforeLoad: ({ location }) => {
@@ -47,9 +52,24 @@ export const Route = createFileRoute("/_auth_routes")({
       </div>
     );
   },
-  component: () => (
-    <Wrapper>
-      <Outlet />
-    </Wrapper>
-  ),
+  gcTime: 0,
+  shouldReload: false,
+  loader: async () => {
+    const user = await getUserDetails();
+
+    return {
+      user,
+    };
+  },
+  component: () => {
+    const { user } = Route.useLoaderData();
+
+    return (
+      <UserContext.Provider value={user}>
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
+      </UserContext.Provider>
+    );
+  },
 });

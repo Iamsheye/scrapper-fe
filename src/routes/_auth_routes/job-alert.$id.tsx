@@ -3,11 +3,11 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import { useHookForm } from "@/hooks/useHookForm";
 import Input from "@/components/input";
+import ProfileButton from "@/components/profile-button";
 import TagInput from "@/components/tag-input";
 import { getJobAlert, editJobAlert } from "@/network/jobs";
 import { editJobAlertSchema } from "@/schemas/job_alert";
 import { toastError } from "@/utils";
-import UserIcon from "@/assets/user.svg?react";
 import CreateSuccessIcon from "@/assets/create-job_alert-success.svg?react";
 
 export const Route = createFileRoute("/_auth_routes/job-alert/$id")({
@@ -64,12 +64,7 @@ function EditJobAlert() {
   return (
     <div>
       <section className="mb-3 flex items-center justify-between">
-        <button className="flex h-8 items-center gap-1.5 rounded-[40px] border border-primary p-2 md:h-10">
-          <UserIcon />
-          <span className="text-[0.875rem] font-bold md:text-[1rem]">
-            hi, {"sheye"}
-          </span>
-        </button>
+        <ProfileButton />
       </section>
 
       <button

@@ -1,3 +1,15 @@
+export type User = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  isPremium: boolean;
+  email: string;
+  googleId: string;
+  name: string;
+  isVerified: boolean;
+  isLoginAllowed: boolean;
+};
+
 export type IJobAlert = {
   id: string;
   createdAt: string;
