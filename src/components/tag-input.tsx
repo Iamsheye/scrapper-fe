@@ -58,10 +58,9 @@ const TagInput = ({
         {tagList?.length > 0 && (
           <button
             type="button"
-            className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-2xl bg-[#e2ded2] p-2 text-[0.75rem] text-primary"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-[0.875rem] text-primary underline md:right-8"
             onClick={onClearAll}
           >
-            {/* <Trash className="h-4 w-4" /> */}
             <span>clear all</span>
           </button>
         )}
@@ -78,7 +77,7 @@ const TagInput = ({
               className="cursor-pointer"
               onClick={() => onTagRemove(word)}
             >
-              <Trash className="h-5 w-5 md:h-6 md:w-6" />
+              <Trash className="h-4 w-4 md:h-5 md:w-5" />
             </button>
           </div>
         ))}

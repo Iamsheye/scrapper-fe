@@ -16,6 +16,7 @@ import { Route as LoginImport } from './routes/login'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
 import { Route as AuthroutesImport } from './routes/_auth_routes'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthroutesProfileImport } from './routes/_auth_routes/profile'
 import { Route as AuthroutesDashboardImport } from './routes/_auth_routes/dashboard'
 import { Route as AuthroutesCreateAlertImport } from './routes/_auth_routes/create-alert'
 import { Route as AuthroutesJobsIdImport } from './routes/_auth_routes/jobs.$id'
@@ -46,6 +47,11 @@ const AuthroutesRoute = AuthroutesImport.update({
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthroutesProfileRoute = AuthroutesProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthroutesRoute,
 } as any)
 
 const AuthroutesDashboardRoute = AuthroutesDashboardImport.update({
@@ -121,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthroutesDashboardImport
       parentRoute: typeof AuthroutesImport
     }
+    '/_auth_routes/profile': {
+      id: '/_auth_routes/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthroutesProfileImport
+      parentRoute: typeof AuthroutesImport
+    }
     '/_auth_routes/job-alert/$id': {
       id: '/_auth_routes/job-alert/$id'
       path: '/job-alert/$id'
@@ -143,6 +156,7 @@ declare module '@tanstack/react-router' {
 interface AuthroutesRouteChildren {
   AuthroutesCreateAlertRoute: typeof AuthroutesCreateAlertRoute
   AuthroutesDashboardRoute: typeof AuthroutesDashboardRoute
+  AuthroutesProfileRoute: typeof AuthroutesProfileRoute
   AuthroutesJobAlertIdRoute: typeof AuthroutesJobAlertIdRoute
   AuthroutesJobsIdRoute: typeof AuthroutesJobsIdRoute
 }
@@ -150,6 +164,7 @@ interface AuthroutesRouteChildren {
 const AuthroutesRouteChildren: AuthroutesRouteChildren = {
   AuthroutesCreateAlertRoute: AuthroutesCreateAlertRoute,
   AuthroutesDashboardRoute: AuthroutesDashboardRoute,
+  AuthroutesProfileRoute: AuthroutesProfileRoute,
   AuthroutesJobAlertIdRoute: AuthroutesJobAlertIdRoute,
   AuthroutesJobsIdRoute: AuthroutesJobsIdRoute,
 }
@@ -166,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/create-alert': typeof AuthroutesCreateAlertRoute
   '/dashboard': typeof AuthroutesDashboardRoute
+  '/profile': typeof AuthroutesProfileRoute
   '/job-alert/$id': typeof AuthroutesJobAlertIdRoute
   '/jobs/$id': typeof AuthroutesJobsIdRoute
 }
@@ -178,6 +194,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/create-alert': typeof AuthroutesCreateAlertRoute
   '/dashboard': typeof AuthroutesDashboardRoute
+  '/profile': typeof AuthroutesProfileRoute
   '/job-alert/$id': typeof AuthroutesJobAlertIdRoute
   '/jobs/$id': typeof AuthroutesJobsIdRoute
 }
@@ -191,6 +208,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_auth_routes/create-alert': typeof AuthroutesCreateAlertRoute
   '/_auth_routes/dashboard': typeof AuthroutesDashboardRoute
+  '/_auth_routes/profile': typeof AuthroutesProfileRoute
   '/_auth_routes/job-alert/$id': typeof AuthroutesJobAlertIdRoute
   '/_auth_routes/jobs/$id': typeof AuthroutesJobsIdRoute
 }
@@ -205,6 +223,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/create-alert'
     | '/dashboard'
+    | '/profile'
     | '/job-alert/$id'
     | '/jobs/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -216,6 +235,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/create-alert'
     | '/dashboard'
+    | '/profile'
     | '/job-alert/$id'
     | '/jobs/$id'
   id:
@@ -227,6 +247,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_auth_routes/create-alert'
     | '/_auth_routes/dashboard'
+    | '/_auth_routes/profile'
     | '/_auth_routes/job-alert/$id'
     | '/_auth_routes/jobs/$id'
   fileRoutesById: FileRoutesById
@@ -275,6 +296,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth_routes/create-alert",
         "/_auth_routes/dashboard",
+        "/_auth_routes/profile",
         "/_auth_routes/job-alert/$id",
         "/_auth_routes/jobs/$id"
       ]
@@ -294,6 +316,10 @@ export const routeTree = rootRoute
     },
     "/_auth_routes/dashboard": {
       "filePath": "_auth_routes/dashboard.tsx",
+      "parent": "/_auth_routes"
+    },
+    "/_auth_routes/profile": {
+      "filePath": "_auth_routes/profile.tsx",
       "parent": "/_auth_routes"
     },
     "/_auth_routes/job-alert/$id": {
