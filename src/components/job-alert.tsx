@@ -8,7 +8,7 @@ type IJobAlertProps = {
 
 const JobAlert = ({ alert, onDelete }: IJobAlertProps) => {
   return (
-    <div className="shrink basis-[calc(50%_-_4px)] rounded-[32px] bg-form p-6 md:rounded-[40px] md:p-8 lg:basis-[calc(33.33%_-_0.67rem)]">
+    <div className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 md:rounded-[40px] md:p-8 lg:w-[calc(33%_-_8px)]">
       <Link
         to="/jobs/$id"
         params={{ id: alert.id }}
