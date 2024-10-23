@@ -1,19 +1,5 @@
 import toast from "react-hot-toast";
 
-const getDayOrdinal = (day: number): string => {
-  if (day > 3 && day < 21) return "th";
-  switch (day % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
-};
-
 export const toastError = (err: unknown) => {
   // @ts-ignore
   const message = err.response?.data?.message || "Login Failed";
