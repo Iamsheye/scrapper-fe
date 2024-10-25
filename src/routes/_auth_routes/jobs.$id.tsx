@@ -10,6 +10,7 @@ import { useDebounceValue } from "usehooks-ts";
 import { getJobAlert, getJobAlertJobs } from "@/network/jobs";
 import { formatDate } from "@/utils";
 import EmptyJobAlertIcon from "@/assets/empty-job-alert.svg?react";
+import Pagination from "@/components/pagination";
 
 const JobsParamsSchema = z.object({
   page: z.number().catch(1),
@@ -46,7 +47,7 @@ function Jobs() {
   useEffect(() => {
     navigate({
       // @ts-ignore
-      search: (prev) => ({ ...prev, search: debouncedValue }),
+      search: (prev) => ({ page: 1, search: debouncedValue }),
       replace: true,
     });
   }, [debouncedValue]);
@@ -98,36 +99,49 @@ function Jobs() {
                   </div>
                 </section>
               ) : (
-                <section className="my-8 flex flex-wrap gap-2 lg:gap-4">
-                  {jobs.map((job) => (
-                    <div
-                      key={job.id}
-                      className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 lg:w-[calc(33%_-_8px)] lg:rounded-[40px] lg:p-8"
-                    >
-                      <div className="flex flex-col items-start gap-2">
-                        <h2
-                          className="text-[1rem] font-semibold text-primary lg:text-[1.25rem]"
-                          style={{ overflowWrap: "anywhere" }}
-                        >
-                          {job.title}
-                        </h2>
-                        <p className="inline-block rounded-[40px] border border-primary p-1 text-[0.75rem] lg:p-1.5 lg:text-[0.875rem]">
-                          {job.hostSite}
-                        </p>
-                        <p className="text-[0.75rem] text-form_text lg:text-[0.875rem]">
-                          {formatDate(job.createdAt)}
-                        </p>
-                      </div>
-
-                      <a
-                        href={job.link}
-                        className="mt-8 text-[0.875rem] text-primary underline lg:mt-4 lg:text-[1.25rem]"
+                <>
+                  <section className="my-8 flex flex-wrap gap-2 lg:gap-4">
+                    {jobs.map((job) => (
+                      <div
+                        key={job.id}
+                        className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 lg:w-[calc(33%_-_8px)] lg:rounded-[40px] lg:p-8"
                       >
-                        link to job
-                      </a>
-                    </div>
-                  ))}
-                </section>
+                        <div className="flex flex-col items-start gap-2">
+                          <h2
+                            className="text-[1rem] font-semibold text-primary lg:text-[1.25rem]"
+                            style={{ overflowWrap: "anywhere" }}
+                          >
+                            {job.title}
+                          </h2>
+                          <p className="inline-block rounded-[40px] border border-primary p-1 text-[0.75rem] lg:p-1.5 lg:text-[0.875rem]">
+                            {job.hostSite}
+                          </p>
+                          <p className="text-[0.75rem] text-form_text lg:text-[0.875rem]">
+                            {formatDate(job.createdAt)}
+                          </p>
+                        </div>
+
+                        <a
+                          href={job.link}
+                          className="mt-8 text-[0.875rem] text-primary underline lg:mt-4 lg:text-[1.25rem]"
+                        >
+                          link to job
+                        </a>
+                      </div>
+                    ))}
+                  </section>
+                  <Pagination
+                    currentPage={page}
+                    totalPages={metadata.totalPages}
+                    onPageChange={(page) =>
+                      navigate({
+                        // @ts-ignore
+                        search: (prev) => ({ ...prev, page }),
+                        replace: true,
+                      })
+                    }
+                  />
+                </>
               )}
             </>
           );
