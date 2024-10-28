@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
+import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
 import { Route as AuthroutesImport } from './routes/_auth_routes'
@@ -26,6 +27,11 @@ import { Route as AuthroutesJobAlertIdImport } from './routes/_auth_routes/job-a
 
 const SignupRoute = SignupImport.update({
   path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ResetPasswordRoute = ResetPasswordImport.update({
+  path: '/reset-password',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -106,6 +112,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordImport
+      parentRoute: typeof rootRoute
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -178,6 +191,7 @@ export interface FileRoutesByFullPath {
   '': typeof AuthroutesRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/create-alert': typeof AuthroutesCreateAlertRoute
   '/dashboard': typeof AuthroutesDashboardRoute
@@ -191,6 +205,7 @@ export interface FileRoutesByTo {
   '': typeof AuthroutesRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/create-alert': typeof AuthroutesCreateAlertRoute
   '/dashboard': typeof AuthroutesDashboardRoute
@@ -205,6 +220,7 @@ export interface FileRoutesById {
   '/_auth_routes': typeof AuthroutesRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_auth_routes/create-alert': typeof AuthroutesCreateAlertRoute
   '/_auth_routes/dashboard': typeof AuthroutesDashboardRoute
@@ -220,6 +236,7 @@ export interface FileRouteTypes {
     | ''
     | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/create-alert'
     | '/dashboard'
@@ -232,6 +249,7 @@ export interface FileRouteTypes {
     | ''
     | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/create-alert'
     | '/dashboard'
@@ -244,6 +262,7 @@ export interface FileRouteTypes {
     | '/_auth_routes'
     | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/_auth_routes/create-alert'
     | '/_auth_routes/dashboard'
@@ -258,6 +277,7 @@ export interface RootRouteChildren {
   AuthroutesRoute: typeof AuthroutesRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthroutesRoute: AuthroutesRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
 }
 
@@ -285,6 +306,7 @@ export const routeTree = rootRoute
         "/_auth_routes",
         "/forgot-password",
         "/login",
+        "/reset-password",
         "/signup"
       ]
     },
@@ -306,6 +328,9 @@ export const routeTree = rootRoute
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/reset-password": {
+      "filePath": "reset-password.tsx"
     },
     "/signup": {
       "filePath": "signup.tsx"

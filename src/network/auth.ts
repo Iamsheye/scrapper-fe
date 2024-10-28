@@ -30,3 +30,18 @@ export const signUp = async (payload: {
 
   return res.data;
 };
+
+export const resetPassword = async (payload: {
+  password: string;
+  token: string;
+}) => {
+  const res = await http.post("/auth/reset-password", payload);
+
+  return res.data.data as any;
+};
+
+export const forgotPassword = async (email: string) => {
+  const res = await http.post("/auth/forgot-password", { email });
+
+  return res.data.data as any;
+};

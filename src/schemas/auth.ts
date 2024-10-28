@@ -36,3 +36,19 @@ export type ILogin = z.infer<typeof loginSchema>;
 export const forgotPasswordSchema = z.object({
   email: z.string().email(),
 });
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(
+        /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]+$/,
+        "Password can only contain alphanumeric characters and special characters",
+      ),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
