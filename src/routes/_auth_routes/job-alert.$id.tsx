@@ -31,7 +31,7 @@ function EditJobAlert() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
     setValue,
   } = useHookForm(editJobAlertSchema, {
@@ -154,6 +154,7 @@ function EditJobAlert() {
             </div>
 
             <button
+              disabled={isSubmitting}
               type="submit"
               className="h-[56px] w-full rounded-[40px] bg-primary text-[1rem] font-semibold text-[#FAFAFAFA] md:h-[88px] md:text-[1.5rem] md:font-bold"
             >

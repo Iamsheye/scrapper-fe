@@ -19,7 +19,7 @@ export const SignupPage = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useHookForm(signupSchema, {
     name: "",
     email: "",
@@ -131,6 +131,7 @@ export const SignupPage = () => {
           </div>
           <div className="flex flex-col items-center gap-6 md:gap-8">
             <button
+              disabled={isSubmitting}
               type="submit"
               className="h-[56px] w-full rounded-[40px] bg-primary text-[1rem] font-semibold text-[#FAFAFAFA] md:h-[88px] md:text-[1.5rem] md:font-bold"
             >
