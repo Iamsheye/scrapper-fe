@@ -7,6 +7,9 @@ type IJobAlertProps = {
 };
 
 const JobAlert = ({ alert, onDelete }: IJobAlertProps) => {
+  const totalIncludedWords = alert.includeWords.length;
+  const totalOmittedWords = alert.omitWords.length;
+
   return (
     <div className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 md:rounded-[40px] md:p-8 lg:w-[calc(33%_-_8px)]">
       <Link
@@ -22,6 +25,50 @@ const JobAlert = ({ alert, onDelete }: IJobAlertProps) => {
           <p className="text-[0.875rem] text-slate-600 lg:text-[1rem]">
             {alert.description}
           </p>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+              <span className="text-[0.875rem] text-form_text">
+                included words:{" "}
+              </span>
+              <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+                {alert.includeWords.slice(0, 3).map((word) => (
+                  <span
+                    key={word}
+                    className="rounded-[40px] bg-purple px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
+                  >
+                    {word}
+                  </span>
+                ))}
+                {totalIncludedWords > 3 && (
+                  <span className="text-[0.75rem] font-medium text-primary">
+                    +{totalIncludedWords - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+              <span className="text-[0.875rem] text-form_text">
+                omitted words:{" "}
+              </span>
+              <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+                {alert.omitWords.slice(0, 3).map((word) => (
+                  <span
+                    key={word}
+                    className="rounded-[40px] bg-light_orange px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
+                  >
+                    {word}
+                  </span>
+                ))}
+                {totalOmittedWords > 3 && (
+                  <span className="text-[0.75rem] font-medium text-primary">
+                    +{totalOmittedWords - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
         </>
       </Link>
 
