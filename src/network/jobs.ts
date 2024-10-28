@@ -1,5 +1,5 @@
 import http from "./axiosInstance";
-import { IJobs, User, type IJobAlert } from "@/types";
+import { type IJobs, type IJobAlert } from "@/types";
 
 type ICreateJobAlert = {
   name: string;
@@ -21,12 +21,6 @@ type Metadata = {
   perPage: number;
   total: number;
   totalPages: number;
-};
-
-export const getUserDetails = async () => {
-  const res = await http.get("/user/me");
-
-  return res.data.data as User;
 };
 
 export const getAllJobAlerts = async () => {

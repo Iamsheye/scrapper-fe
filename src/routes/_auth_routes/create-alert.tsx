@@ -1,5 +1,10 @@
-import { useState } from "react";
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import {
+  createFileRoute,
+  Link,
+  useLoaderData,
+  useRouter,
+} from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import Input from "@/components/input";
 import TagInput from "@/components/tag-input";
@@ -16,7 +21,16 @@ export const Route = createFileRoute("/_auth_routes/create-alert")({
 
 function CreateAlert() {
   const { history } = useRouter();
+  const { user } = useLoaderData({
+    from: "/_auth_routes",
+  });
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
+
+  useEffect(() => {
+    if (!user.isVerified) {
+      toast.error(`Please verify your account to create job alerts`);
+    }
+  }, []);
 
   const {
     handleSubmit,

@@ -1,4 +1,3 @@
-import { createContext } from "react";
 import {
   createFileRoute,
   Outlet,
@@ -6,10 +5,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import Wrapper from "@/components/wrapper";
-import { getUserDetails } from "@/network/jobs";
-import { User } from "@/types";
-
-export const UserContext = createContext<User | null>(null);
+import { getUserDetails } from "@/network/user";
 
 export const Route = createFileRoute("/_auth_routes")({
   beforeLoad: ({ location }) => {
@@ -62,14 +58,10 @@ export const Route = createFileRoute("/_auth_routes")({
     };
   },
   component: () => {
-    const { user } = Route.useLoaderData();
-
     return (
-      <UserContext.Provider value={user}>
-        <Wrapper>
-          <Outlet />
-        </Wrapper>
-      </UserContext.Provider>
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
     );
   },
 });
