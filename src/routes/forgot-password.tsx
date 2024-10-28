@@ -21,8 +21,7 @@ export const ForgotPasswordPage = () => {
     const toastId = toast.loading("submitting...");
 
     try {
-      const res = await forgotPassword(data.email);
-      debugger;
+      await forgotPassword(data.email);
 
       toast.dismiss(toastId);
       toast.success("Password reset email sent");

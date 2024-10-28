@@ -73,7 +73,6 @@ export const LoginPage = () => {
     },
     onError: (err) => {
       toast.error(err.error_description || "Google Login Failed");
-      console.log(err);
     },
     flow: "auth-code",
   });
