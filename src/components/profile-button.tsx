@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLoaderData } from "@tanstack/react-router";
 import UserIcon from "@/assets/user.svg?react";
-import { UserContext } from "@/routes/_auth_routes";
 
 const ProfileButton = () => {
-  const user = useContext(UserContext);
+  const { user } = useLoaderData({
+    from: "/_auth_routes",
+  });
 
   return (
     <Link
@@ -14,7 +14,7 @@ const ProfileButton = () => {
       <>
         <UserIcon />
         <span className="text-[0.875rem] font-bold md:text-[1rem]">
-          hi, {user?.name.toLowerCase()}
+          hi, {user.name.toLowerCase()}
         </span>
       </>
     </Link>
