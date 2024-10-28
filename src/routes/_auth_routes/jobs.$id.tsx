@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  Await,
-  createFileRoute,
-  defer,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { useDebounceValue } from "usehooks-ts";
 import { getJobAlert, getJobAlertJobs } from "@/network/jobs";
@@ -24,14 +19,14 @@ export const Route = createFileRoute("/_auth_routes/jobs/$id")({
   loader: async ({ params, deps: { page, search } }) => {
     const jobInfo = await getJobAlert(params.id);
 
-    const jobsRes = getJobAlertJobs(params.id, {
+    const jobsRes = await getJobAlertJobs(params.id, {
       page,
       search,
       perPage: 24,
     });
 
     return {
-      jobsRes: defer(jobsRes),
+      jobsRes,
       jobInfo,
     };
   },
@@ -51,6 +46,8 @@ function Jobs() {
       replace: true,
     });
   }, [debouncedValue]);
+
+  const { jobs, metadata } = jobsRes;
 
   return (
     <div>
@@ -83,70 +80,60 @@ function Jobs() {
         />
       </div>
 
-      <Await promise={jobsRes} fallback={<></>}>
-        {(data) => {
-          const { jobs, metadata } = data;
+      {jobs.length < 1 ? (
+        <section className="empty-job flex items-center justify-center">
+          <div>
+            <EmptyJobAlertIcon className="mb-8 h-[154px] w-[154px] md:h-[200px] md:w-[200px]" />
+            <p className="text-center text-[1.5rem] font-semibold text-form_text md:text-[2rem]">
+              no job(s) found
+            </p>
+          </div>
+        </section>
+      ) : (
+        <>
+          <section className="my-8 flex flex-wrap gap-2 lg:gap-4">
+            {jobs.map((job) => (
+              <div
+                key={job.id}
+                className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 lg:w-[calc(33%_-_8px)] lg:rounded-[40px] lg:p-8"
+              >
+                <div className="flex flex-col items-start gap-2">
+                  <h2
+                    className="text-[1rem] font-semibold text-primary lg:text-[1.25rem]"
+                    style={{ overflowWrap: "anywhere" }}
+                  >
+                    {job.title}
+                  </h2>
+                  <p className="inline-block rounded-[40px] border border-primary p-1 text-[0.75rem] lg:p-1.5 lg:text-[0.875rem]">
+                    {job.hostSite}
+                  </p>
+                  <p className="text-[0.75rem] text-form_text lg:text-[0.875rem]">
+                    {formatDate(job.createdAt)}
+                  </p>
+                </div>
 
-          return (
-            <>
-              {jobs.length < 1 ? (
-                <section className="empty-job flex items-center justify-center">
-                  <div>
-                    <EmptyJobAlertIcon className="mb-8 h-[154px] w-[154px] md:h-[200px] md:w-[200px]" />
-                    <p className="text-center text-[1.5rem] font-semibold text-form_text md:text-[2rem]">
-                      no job(s) found
-                    </p>
-                  </div>
-                </section>
-              ) : (
-                <>
-                  <section className="my-8 flex flex-wrap gap-2 lg:gap-4">
-                    {jobs.map((job) => (
-                      <div
-                        key={job.id}
-                        className="flex w-[calc(50%_-_4px)] flex-col justify-between rounded-[32px] bg-form p-6 lg:w-[calc(33%_-_8px)] lg:rounded-[40px] lg:p-8"
-                      >
-                        <div className="flex flex-col items-start gap-2">
-                          <h2
-                            className="text-[1rem] font-semibold text-primary lg:text-[1.25rem]"
-                            style={{ overflowWrap: "anywhere" }}
-                          >
-                            {job.title}
-                          </h2>
-                          <p className="inline-block rounded-[40px] border border-primary p-1 text-[0.75rem] lg:p-1.5 lg:text-[0.875rem]">
-                            {job.hostSite}
-                          </p>
-                          <p className="text-[0.75rem] text-form_text lg:text-[0.875rem]">
-                            {formatDate(job.createdAt)}
-                          </p>
-                        </div>
-
-                        <a
-                          href={job.link}
-                          className="mt-8 text-[0.875rem] text-primary underline lg:mt-4 lg:text-[1.25rem]"
-                        >
-                          link to job
-                        </a>
-                      </div>
-                    ))}
-                  </section>
-                  <Pagination
-                    currentPage={page}
-                    totalPages={metadata.totalPages}
-                    onPageChange={(page) =>
-                      navigate({
-                        // @ts-ignore
-                        search: (prev) => ({ ...prev, page }),
-                        replace: true,
-                      })
-                    }
-                  />
-                </>
-              )}
-            </>
-          );
-        }}
-      </Await>
+                <a
+                  href={job.link}
+                  className="mt-8 text-[0.875rem] text-primary underline lg:mt-4 lg:text-[1.25rem]"
+                >
+                  link to job
+                </a>
+              </div>
+            ))}
+          </section>
+          <Pagination
+            currentPage={page}
+            totalPages={metadata.totalPages}
+            onPageChange={(page) =>
+              navigate({
+                // @ts-ignore
+                search: (prev) => ({ ...prev, page }),
+                replace: true,
+              })
+            }
+          />
+        </>
+      )}
     </div>
   );
 }
