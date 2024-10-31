@@ -45,3 +45,9 @@ export const forgotPassword = async (email: string) => {
 
   return res.data.data as any;
 };
+
+export const verifyUserEmail = async (id: string) => {
+  const res = await http.post(`/auth/verify-email/`, { id });
+
+  return res.data.data as any;
+};
