@@ -42,7 +42,7 @@ function CreateAlert() {
     name: "",
     search: "",
     description: "",
-    includeWords: [],
+    includeWords: ["remote"],
     omitWords: [],
   });
 
