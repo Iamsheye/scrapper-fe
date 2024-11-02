@@ -65,6 +65,11 @@ const TagInput = ({
           </button>
         )}
       </form>
+      {text && tagList.length < 1 && (
+        <span className="ml-6 text-[0.75rem] font-medium text-form_text md:ml-8 md:text-[0.875rem]">
+          press enter to add to list
+        </span>
+      )}
       <div className="flex flex-wrap gap-2 px-2">
         {tagList?.map((word, index) => (
           <div
