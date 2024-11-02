@@ -27,47 +27,51 @@ const JobAlert = ({ alert, onDelete }: IJobAlertProps) => {
           </p>
 
           <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-1 lg:gap-2">
-              <span className="text-[0.875rem] text-form_text">
-                included words:{" "}
-              </span>
+            {alert.includeWords.length > 0 && (
               <div className="flex flex-wrap items-center gap-1 lg:gap-2">
-                {alert.includeWords.slice(0, 3).map((word) => (
-                  <span
-                    key={word}
-                    className="rounded-[40px] bg-purple px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
-                  >
-                    {word}
-                  </span>
-                ))}
-                {totalIncludedWords > 3 && (
-                  <span className="text-[0.75rem] font-medium text-primary">
-                    +{totalIncludedWords - 3}
-                  </span>
-                )}
+                <span className="text-[0.875rem] text-form_text">
+                  included words:{" "}
+                </span>
+                <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+                  {alert.includeWords.slice(0, 3).map((word) => (
+                    <span
+                      key={word}
+                      className="rounded-[40px] bg-purple px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
+                    >
+                      {word}
+                    </span>
+                  ))}
+                  {totalIncludedWords > 3 && (
+                    <span className="text-[0.75rem] font-medium text-primary">
+                      +{totalIncludedWords - 3}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="flex flex-wrap items-center gap-1 lg:gap-2">
-              <span className="text-[0.875rem] text-form_text">
-                omitted words:{" "}
-              </span>
+            {alert.omitWords.length > 0 && (
               <div className="flex flex-wrap items-center gap-1 lg:gap-2">
-                {alert.omitWords.slice(0, 3).map((word) => (
-                  <span
-                    key={word}
-                    className="rounded-[40px] bg-light_orange px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
-                  >
-                    {word}
-                  </span>
-                ))}
-                {totalOmittedWords > 3 && (
-                  <span className="text-[0.75rem] font-medium text-primary">
-                    +{totalOmittedWords - 3}
-                  </span>
-                )}
+                <span className="text-[0.875rem] text-form_text">
+                  omitted words:{" "}
+                </span>
+                <div className="flex flex-wrap items-center gap-1 lg:gap-2">
+                  {alert.omitWords.slice(0, 3).map((word) => (
+                    <span
+                      key={word}
+                      className="rounded-[40px] bg-light_orange px-1.5 py-0.5 text-[0.75rem] font-medium text-primary"
+                    >
+                      {word}
+                    </span>
+                  ))}
+                  {totalOmittedWords > 3 && (
+                    <span className="text-[0.75rem] font-medium text-primary">
+                      +{totalOmittedWords - 3}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </>
       </Link>
