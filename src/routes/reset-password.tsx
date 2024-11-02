@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import AuthIcons from "@/components/auth-icons";
@@ -69,6 +70,10 @@ function ResetPassword() {
 
   return (
     <>
+      <Helmet>
+        <title>Reset Password | Scrapper</title>
+      </Helmet>
+
       <AuthIcons />
 
       <div className="wrapper">

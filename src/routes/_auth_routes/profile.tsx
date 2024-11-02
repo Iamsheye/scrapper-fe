@@ -1,11 +1,12 @@
-import ChangePassword from "@/components/change-password";
-import ProfileForm from "@/components/profile-form";
+import { useState } from "react";
 import {
   createFileRoute,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { useState } from "react";
+import { Helmet } from "react-helmet";
+import ChangePassword from "@/components/change-password";
+import ProfileForm from "@/components/profile-form";
 
 export const Route = createFileRoute("/_auth_routes/profile")({
   component: Profile,
@@ -18,6 +19,10 @@ function Profile() {
 
   return (
     <div>
+      <Helmet>
+        <title>Profile | Scrapper</title>
+      </Helmet>
+
       <div className="flex items-center justify-between gap-4">
         <button
           onClick={() => history.go(-1)}

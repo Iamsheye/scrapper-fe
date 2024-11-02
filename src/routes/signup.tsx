@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import { useGoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import { googleLogin, signUp } from "@/network/auth";
@@ -78,6 +79,10 @@ export const SignupPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Signup | Scrapper</title>
+      </Helmet>
+
       <AuthIcons />
       <div className="wrapper">
         <section className="mx-auto mb-10 max-w-[324px] md:mb-12 md:max-w-max">

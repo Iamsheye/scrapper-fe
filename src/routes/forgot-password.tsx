@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import Input from "@/components/input";
 import FooterText from "@/components/footer-text";
@@ -33,6 +34,10 @@ export const ForgotPasswordPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Forgot Password | Scrapper</title>
+      </Helmet>
+
       <AuthIcons />
 
       <div className="wrapper">

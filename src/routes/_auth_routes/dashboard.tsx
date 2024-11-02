@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import JobAlert from "@/components/job-alert";
 import ProfileButton from "@/components/profile-button";
@@ -42,6 +43,10 @@ function Dashboard() {
 
   return (
     <div>
+      <Helmet>
+        <title>Dashboard | Scrapper</title>
+      </Helmet>
+
       <section className="mb-3 flex items-center justify-between">
         <ProfileButton />
       </section>

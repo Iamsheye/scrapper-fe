@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -91,6 +92,10 @@ export const Index = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>Scrapper</title>
+      </Helmet>
+
       <Recommend className="recommend absolute -left-6 -top-[36px] -z-20 h-48 w-36 md:-left-14 md:-top-[36px] md:h-80 md:w-80" />
       <Recycle
         id="recycle"

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import { z } from "zod";
 import { useDebounceValue } from "usehooks-ts";
 import { getJobAlert, getJobAlertJobs } from "@/network/jobs";
@@ -51,6 +52,10 @@ function Jobs() {
 
   return (
     <div>
+      <Helmet>
+        <title>{jobInfo.name} | Scrapper</title>
+      </Helmet>
+
       <div className="flex items-center gap-6 lg:gap-8">
         <button
           onClick={() => history.go(-1)}
