@@ -5,6 +5,7 @@ import {
   useLoaderData,
   useRouter,
 } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import Input from "@/components/input";
 import TagInput from "@/components/tag-input";
@@ -68,6 +69,10 @@ function CreateAlert() {
 
   return (
     <div>
+      <Helmet>
+        <title>Create Job Alert | Scrapper</title>
+      </Helmet>
+
       <section className="mb-3 flex items-center justify-between">
         <ProfileButton />
       </section>

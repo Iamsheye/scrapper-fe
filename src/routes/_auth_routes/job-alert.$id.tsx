@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import { useHookForm } from "@/hooks/useHookForm";
 import Input from "@/components/input";
@@ -63,6 +64,10 @@ function EditJobAlert() {
 
   return (
     <div>
+      <Helmet>
+        <title>Edit {watch("name")} | Scrapper</title>
+      </Helmet>
+
       <section className="mb-3 flex items-center justify-between">
         <ProfileButton />
       </section>
