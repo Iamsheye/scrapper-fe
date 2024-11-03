@@ -79,7 +79,7 @@ function Jobs() {
       <div className="my-6 flex justify-between gap-6">
         <input
           defaultValue={search}
-          placeholder="search"
+          placeholder="role"
           onChange={(e) => setValue(e.currentTarget.value)}
           className="h-[44px] w-full rounded-[24px] bg-form p-4 text-[0.875rem] font-semibold text-primary focus-visible:outline-form_text md:w-80 md:rounded-[40px] lg:w-96"
         />
