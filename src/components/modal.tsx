@@ -14,9 +14,15 @@ const DialogModal = ({ text, isOpen, onClose, onYes }: DialogModalProps) => {
     const dialog = dialogRef.current;
     if (isOpen) {
       dialog?.showModal();
+      document.body.style.overflow = "hidden";
     } else {
       dialog?.close();
+      document.body.style.overflow = "auto";
     }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [isOpen]);
 
   const handleClickOutside = (
@@ -40,9 +46,9 @@ const DialogModal = ({ text, isOpen, onClose, onYes }: DialogModalProps) => {
     <dialog
       ref={dialogRef}
       onClick={handleClickOutside}
-      className="relative w-full max-w-[calc(100vw_-_48px)] rounded-[40px] backdrop:bg-black/25 lg:max-w-[calc(100vw_-_128px)]"
+      className="w-full max-w-[calc(100vw_-_48px)] rounded-[40px] backdrop:bg-black/25 lg:max-w-[calc(100vw_-_128px)]"
     >
-      <div className="flex items-center justify-between gap-8 bg-form px-6 py-4 lg:p-8">
+      <div className="flex flex-col items-center justify-between gap-8 bg-form px-6 py-4 md:flex-row lg:p-8">
         <p className="text-[0.875rem] font-semibold text-primary md:text-[1.25rem]">
           {text}
         </p>
