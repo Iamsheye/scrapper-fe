@@ -54,7 +54,7 @@ function CreateAlert() {
   const watchIncludeWords = watch("includeWords");
   const watchOmitWords = watch("omitWords");
 
-  const submitForm = handleSubmit((data) => setShowConfirmationModal(true));
+  const submitForm = handleSubmit(() => setShowConfirmationModal(true));
 
   const submitJobAlert = async (data: {
     search: string;
