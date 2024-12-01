@@ -17,6 +17,13 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
+
       - name: Install Bun
         uses: oven-sh/setup-bun@v1
 
@@ -24,6 +31,7 @@ jobs:
         run: bun install
 
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: bunx playwright install --with-deps
 
       - name: Run Playwright tests
