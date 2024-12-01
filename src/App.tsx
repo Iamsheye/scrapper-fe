@@ -13,8 +13,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_ID = undefined;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const App = () => {
   return (
