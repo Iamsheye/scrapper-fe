@@ -8,7 +8,7 @@ export const getUserDetails = async () => {
 };
 
 export const sendMailVerification = async () => {
-  await http.post("/user/send-verification-mail");
+  await http.post("/user/send-verification-email");
 
   return;
 };
