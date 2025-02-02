@@ -8,6 +8,7 @@ const password = process.env.LOGIN_PASSWORD as string;
 test.describe("Login Page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/login");
+    await page.evaluate(() => localStorage.clear());
   });
 
   test("should display login page correctly", async ({ page }) => {
@@ -44,12 +45,21 @@ test.describe("Login Page", () => {
 
   test("should login successfully with valid credentials", async ({ page }) => {
     // Mock successful login API response
-    await page.route("**/api/auth/login", async (route) => {
+    await page.route("**/auth/signin", async (route) => {
       await route.fulfill({
-        status: 200,
+        status: 201,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          token: "fake-token",
-          refreshToken: "fake-refresh-token",
+          data: {
+            id: "1",
+            email: username,
+            name: "Test User",
+            isPremium: false,
+            token: "test-token",
+            refreshToken: "test-refresh-token",
+          },
+          statusCode: 201,
+          message: "Logged in successfully",
         }),
       });
     });
@@ -81,11 +91,13 @@ test.describe("Login Page", () => {
 
   test("should handle login failure", async ({ page }) => {
     // Mock failed login API response
-    await page.route("**/api/auth/login", async (route) => {
+    await page.route("**/auth/login", async (route) => {
       await route.fulfill({
-        status: 401,
+        status: 403,
         body: JSON.stringify({
           message: "Invalid credentials",
+          error: "Forbidden",
+          statusCode: 403,
         }),
       });
     });
@@ -125,18 +137,27 @@ test.describe("Login Page", () => {
     page,
   }) => {
     // Mock successful login API response
-    await page.route("**/api/auth/login", async (route) => {
+    await page.route("**/auth/signin", async (route) => {
       await route.fulfill({
-        status: 200,
+        status: 201,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          token: "fake-token",
-          refreshToken: "fake-refresh-token",
+          data: {
+            id: "1",
+            email: username,
+            name: "Test User",
+            isPremium: false,
+            token: "test-token",
+            refreshToken: "test-refresh-token",
+          },
+          statusCode: 201,
+          message: "Logged in successfully",
         }),
       });
     });
 
     // Navigate to login with next parameter
-    await page.goto("/login?next=/settings");
+    await page.goto("/login?next=/profile");
 
     await page.getByPlaceholder("Email").fill(username);
 
@@ -144,8 +165,8 @@ test.describe("Login Page", () => {
 
     await page.getByRole("button", { name: "continue", exact: true }).click();
 
-    // Verify navigation to settings page
-    await expect(page).toHaveURL("/settings");
+    // Verify navigation to profile page
+    await expect(page).toHaveURL("/profile");
   });
 
   test.describe("Responsive Design", () => {

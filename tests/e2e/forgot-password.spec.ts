@@ -33,6 +33,20 @@ test.describe("Forgot Password Page", () => {
   });
 
   test("should handle successful password reset request", async ({ page }) => {
+    await page.route("**/auth/forgot-password", async (route) => {
+      await route.fulfill({
+        status: 200,
+        body: JSON.stringify({
+          data: {
+            message:
+              "If the email exists, a password reset link has been sent.",
+          },
+          statusCode: 201,
+          message: "Password reset link sent successfully",
+        }),
+      });
+    });
+
     const emailInput = page.getByPlaceholder("Email");
 
     await emailInput.fill(username);
